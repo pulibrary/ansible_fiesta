@@ -8,6 +8,7 @@ highly opinionated. The participant is encouraged to work with the tools they
 are most comfortable with but we will make the following assumptions. The
 participant has the following installed on their networked computer.
 
+* A Terminal Emulator
 * A Package manager
 * A Text Editor
 * Git
@@ -19,6 +20,8 @@ participant has the following installed on their networked computer.
 
 ## Setup Environment for macOS
 
+* macOS ships with a terminal. (Consider using:
+  [iTerm2](https://www.iterm2.com/index.html))
 * Follow the instructions on the [Homebrew Page](https://brew.sh/) to install
   the package manager.
 * Select a programmers Text Editor (For example VIm, Atom)
@@ -104,3 +107,25 @@ localhost | SUCCESS => {
     "ping": "pong"
 }
 ```
+
+## Upload ssh-keys to Github
+
+* Create a [Github Account](https://github.com)
+* Generate your ssh keys with the following commands on your Terminal
+```bash
+ssh-keygen -t rsa -b 4096 -C "your_email@princeton.edu"
+```
+
+This will generate a new ssh-key using your princeton email as the label. If you
+created your Github account with a different email account please adjust the
+command above accordingly. You will be prompted to `"Enter a file to save the
+key"` This accepts the default file location.
+
+```bash
+Enter a file in which to save the key (/path/to/userhome/directory/.ssh/id_rsa): [Press enter]
+```
+
+Follow the [Github
+Instructions](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
+to add your keys to your account. These keys will be appended to the `pulsys`
+user needed for future activities in these classes.
