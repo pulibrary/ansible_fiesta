@@ -12,6 +12,7 @@ aforementioned repository.
 ## Curriculum
 
 * [Ansible Install and Environment Setup](fiesta_lesson_0.md)
+* Ansible Install and Environment Setup
 * Playbooks
 * Playbooks + Inventories
 * Playbooks + Inventories + Variables + Facts
