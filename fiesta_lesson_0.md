@@ -22,6 +22,9 @@ participant has the following installed on their networked computer.
 * Follow the instructions on the [Homebrew Page](https://brew.sh/) to install
   the package manager.
 * Select a programmers Text Editor (For example VIm, Atom)
+```bash
+brew install vim
+```
 * Install Git using the Homebrew package manager with:
 ```bash
 brew install git
@@ -38,6 +41,42 @@ brew cask install virtualbox
 ```
 brew install python pyenv pyenvvirtualenv
 ```
+
+## Setup Environment for Ubuntu Bionic
+
+* We will us the `apt` package manager
+```bash
+sudo add-apt-repository multiverse && sudo apt -y update
+```
+* Select a programmers Text Editor (For example VIm, nano)
+```bash
+sudo apt -y install vim
+```
+* Install Git using `apt` with:
+```bash
+sudo apt -y install git
+```
+* Install Virtualbox using `apt` with:
+```bash
+sudo apt -y install virtualbox
+```
+* Install Vagrant using `apt` with:
+```bash
+sudo apt -y install vagrant
+```
+* Setup Python and virtual environment software with:
+```bash
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
+exec "$SHELL"
+git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+ `echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile`
+```
+
+### Test your installation on both macOS and Ubuntu with:
+
 * Configure your environment for this project with:
 ```bash
 pyenv install 3.7.2
@@ -48,11 +87,6 @@ pyenv virtualenv 3.7.2 ansible_fiesta-3.7.2
 pyenv activate ansible_fiesta-3.7.2
 pip install -U pip
 pip install ansible molecule
-```
-
-Test your installation with:
-
-```bash
 ansible localhost -m ping
 ```
 
