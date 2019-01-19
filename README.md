@@ -11,10 +11,10 @@ aforementioned repository.
 
 ## Curriculum
 
-• Ansible Install and Environment Setup
-• Playbooks
-• Playbooks + Inventories
-• Playbooks + Inventories + Variables + Facts
-• Roles
-• Roles + Testing
-• Debugging Ansible
+* Ansible Install and Environment Setup
+* Playbooks
+* Playbooks + Inventories
+* Playbooks + Inventories + Variables + Facts
+* Roles
+* Roles + Testing
+* Debugging Ansible
