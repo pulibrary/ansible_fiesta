@@ -129,3 +129,44 @@ Follow the [Github
 Instructions](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)
 to add your keys to your account. These keys will be appended to the `pulsys`
 user needed for future activities in these classes.
+
+## Ansible ad-hoc
+
+With your keys added try the following ad-hoc commands
+
+```bash
+ansible testservers -m ping -vvvv
+```
+
+We will see that the "ping" module has succeeded. The `"changed" : false` output
+tells us that the executing module did not change the state of the server. The
+`"ping": "pong"` text is output that is specific to the ping module. The `-m`
+flag part of the command represents module and the `-vvvv` part is the verbosity
+levels in the output.
+
+Run the following now:
+
+```bash
+ansible testservers -m command -a uptime
+```
+
+and
+
+```bash
+ansible testservers -m command -a -b "tail /var/log/syslog"
+```
+
+Here we are using Ansible's `command` module (used by default) and because
+`/var/log/syslog` requires sudo privileges we elevate our privileges using the
+`-b` flag. (for become).
+
+Finally let's run:
+
+```bash
+ansible testservers -m apt -b -a "name=nginx update_cache=yes state=present"
+```
+
+Here we are using Ansible's `apt` module to run `apt -y update && apt -y install
+nginx`. It is important to state that you will rarely need to use this but most
+ad-hoc commands are useful in quickly getting reports back from hosts under your
+management.

@@ -1,0 +1,3 @@
+[testservers]
+ansible-tower1.princeton.edu
+ansible-tower2.princeton.edu
