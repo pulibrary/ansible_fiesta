@@ -126,7 +126,7 @@ user needed for future activities in these classes.
 With your keys added try the following ad-hoc commands
 
 ```bash
-ansible testservers -m ping -vvvv
+ansible testservers -u pulsys -m ping -vvvv
 ```
 
 We will see that the "ping" module has succeeded. The `"changed" : false` output
