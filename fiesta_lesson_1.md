@@ -20,6 +20,9 @@ Look at the contents of:
 
 ## Playbook Anatomy
 
+A playbook contains one or more plays. A play connects a set of hosts with a
+series of tasks. Each task is associated with one module.
+
 * Playbooks are YAML files
 * Playbooks are a list of dictionaries (consisting of a list of plays)
 * Playbooks **MUST** contain a set of hosts to configure, a list of tasks to be
@@ -63,3 +66,15 @@ module. In the one above `apt` is the module name and the arguments are
 
 These arguments tell the `apt` module to uninstall the package named `nginx` and
 purge it. (the equivalent of doing `apt -y purge nginx`)
+
+### Modules
+
+Modules are generically packaged scripts that come with Ansible. The perform
+actions on the host. Thus far we've seen.
+
+* `apt` which installs and removes packages using the `apt` package manager
+* `copy` which copies files from local machine to the hosts. If you read the
+  documentation further it can also copy remote files. 
+* `file` sets the attribute of a file, directory or symlink
+* `service` starts stops or restarts a service
+* `template` generates a new file to be copied to the hosts
