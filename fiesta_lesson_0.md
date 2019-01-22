@@ -81,7 +81,7 @@ pip install --user pipenv
 
 * Install Ansible and Molecule with:
 ```bash
-pipenv install ansible molecule
+pipenv shell
 ansible localhost -m ping
 ```
 
