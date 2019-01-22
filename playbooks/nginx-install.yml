@@ -1,0 +1,40 @@
+---
+- name: configure webservers with nginx
+  hosts: testservers
+  become: true
+  tasks:
+
+    - name: remove nginx webserver
+      apt:
+        name: nginx
+        state: absent
+        purge: true
+      ignore_errors: true
+
+    - name: install nginx webserver
+      apt:
+        name: nginx
+        update_cache: true
+        state: present
+
+    - name: copy nginx config file
+      copy:
+        src: "playbooks/files/nginx.conf"
+        dest: "/etc/nginx/sites-available/default.conf"
+
+    - name: enable new configuration
+      file:
+        src: "/etc/nginx/sites-available/default.conf"
+        dest: "/etc/nginx/sites-enables/default.conf"
+        state: link
+
+    - name: copy demo index.html
+      template:
+        src: "playbooks/templates/index.html.j2"
+        dest: "/var/www/html/index.html"
+        mode: 0644
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
