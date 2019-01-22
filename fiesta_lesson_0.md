@@ -40,9 +40,9 @@ brew cask install vagrant
 ```bash
 brew cask install virtualbox
 ```
-* Install Python and virtual environment software with:
+* Install Python and virtual environment management software with:
 ```
-brew install python pyenv pyenvvirtualenv
+brew install python pipenv
 ```
 
 ## Setup Environment for Ubuntu Bionic
@@ -67,29 +67,18 @@ sudo apt -y install virtualbox
 ```bash
 sudo apt -y install vagrant
 ```
-* Setup Python and virtual environment software with:
+* Setup Python and virtual environment management software with:
 ```bash
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-exec "$SHELL"
-git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
- `echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile`
+sudo apt -y install python-pip
+sudo pip install -U pip
+pip install --user pipenv
 ```
 
 ### Test your installation on both macOS and Ubuntu with:
 
 * Configure your environment for this project with:
 ```bash
-pyenv install 3.7.2
-pyenv virtualenv 3.7.2 ansible_fiesta-3.7.2
-```
-* Install Ansible and Molecule in your newly created python environment with:
-```bash
-pyenv activate ansible_fiesta-3.7.2
-pip install -U pip
-pip install ansible molecule
+pipenv shell
 ansible localhost -m ping
 ```
 
