@@ -139,8 +139,7 @@ levels in the output.
 Run the following now:
 
 ```bash
-ansible testservers -u pulsys -m
-[command](https://docs.ansible.com/ansible/latest/modules/command_module.html#command-module) -a uptime
+ansible testservers -u pulsys -m command -a uptime
 ```
 
 and
@@ -149,7 +148,8 @@ and
 ansible testservers -u pulsys -m command -b -a "tail /var/log/syslog"
 ```
 
-Here we are using Ansible's `command` module (used by default) and because
+Here we are using Ansible's
+[`command`](https://docs.ansible.com/ansible/latest/modules/command_module.html) module (used by default) and because
 `/var/log/syslog` requires sudo privileges we elevate our privileges using the
 `-b` flag. (for become).
 
