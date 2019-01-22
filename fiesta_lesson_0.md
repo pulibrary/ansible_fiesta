@@ -2,6 +2,10 @@
 
 ## Prerequisites
 
+Clone this repo. Run all of the command -unless specified- from the root of this
+repo. Make sure you are running the tests at the end of the class whilst
+connected to the princeton network.
+
 Participants in this exercises will be expected to install the following to work
 effectively in this for this tutorial. As a result this repository will be
 highly opinionated. The participant is encouraged to work with the tools they
@@ -108,7 +112,8 @@ ssh-keygen -t rsa -b 4096 -C "your_email@princeton.edu"
 This will generate a new ssh-key using your princeton email as the label. If you
 created your Github account with a different email account please adjust the
 command above accordingly. You will be prompted to `"Enter a file to save the
-key"` This accepts the default file location.
+key"` This accepts the default file location. Ping kayiwa@ to have your keys
+appended to the pulsys user's `authorized_keys`
 
 ```bash
 Enter a file in which to save the key (/path/to/userhome/directory/.ssh/id_rsa): [Press enter]
@@ -124,7 +129,7 @@ user needed for future activities in these classes.
 With your keys added try the following ad-hoc commands
 
 ```bash
-ansible testservers -m ping -vvvv
+ansible testservers -u pulsys -m ping -vvvv
 ```
 
 We will see that the "ping" module has succeeded. The `"changed" : false` output
@@ -136,26 +141,27 @@ levels in the output.
 Run the following now:
 
 ```bash
-ansible testservers -m command -a uptime
+ansible testservers -u pulsys -m command -a uptime
 ```
 
 and
 
 ```bash
-ansible testservers -m command -a -b "tail /var/log/syslog"
+ansible testservers -u pulsys -m command -b -a "tail /var/log/syslog"
 ```
 
-Here we are using Ansible's `command` module (used by default) and because
+Here we are using Ansible's
+[`command`](https://docs.ansible.com/ansible/latest/modules/command_module.html) module (used by default) and because
 `/var/log/syslog` requires sudo privileges we elevate our privileges using the
 `-b` flag. (for become).
 
 Finally let's run:
 
 ```bash
-ansible testservers -m apt -b -a "name=nginx update_cache=yes state=present"
+ansible testservers -u pulsys -m apt -b -a "name=htop update_cache=yes state=present"
 ```
 
-Here we are using Ansible's `apt` module to run `apt -y update && apt -y install
-nginx`. It is important to state that you will rarely need to use this but most
+Here we are using Ansible's [`apt`](https://docs.ansible.com/ansible/latest/modules/apt_module.html?highlight=apt) module to run `apt -y update && apt -y install
+htop`. It is important to state that you will rarely need to use this but most
 ad-hoc commands are useful in quickly getting reports back from hosts under your
 management.
