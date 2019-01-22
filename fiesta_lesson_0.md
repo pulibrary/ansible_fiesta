@@ -3,7 +3,8 @@
 ## Prerequisites
 
 Clone this repo. Run all of the command -unless specified- from the root of this
-repo.
+repo. Make sure you are running the tests at the end of the class whilst
+connected to the princeton network.
 
 Participants in this exercises will be expected to install the following to work
 effectively in this for this tutorial. As a result this repository will be
@@ -111,7 +112,8 @@ ssh-keygen -t rsa -b 4096 -C "your_email@princeton.edu"
 This will generate a new ssh-key using your princeton email as the label. If you
 created your Github account with a different email account please adjust the
 command above accordingly. You will be prompted to `"Enter a file to save the
-key"` This accepts the default file location.
+key"` This accepts the default file location. Ping kayiwa@ to have your keys
+appended to the pulsys user's `authorized_keys`
 
 ```bash
 Enter a file in which to save the key (/path/to/userhome/directory/.ssh/id_rsa): [Press enter]
