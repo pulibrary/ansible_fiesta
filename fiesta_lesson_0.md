@@ -2,6 +2,9 @@
 
 ## Prerequisites
 
+Clone this repo. Run all of the command -unless specified- from the root of this
+repo.
+
 Participants in this exercises will be expected to install the following to work
 effectively in this for this tutorial. As a result this repository will be
 highly opinionated. The participant is encouraged to work with the tools they
@@ -136,13 +139,14 @@ levels in the output.
 Run the following now:
 
 ```bash
-ansible testservers -m command -a uptime
+ansible testservers -u pulsys -m
+[command](https://docs.ansible.com/ansible/latest/modules/command_module.html#command-module) -a uptime
 ```
 
 and
 
 ```bash
-ansible testservers -m command -a -b "tail /var/log/syslog"
+ansible testservers -u pulsys -m command -b -a "tail /var/log/syslog"
 ```
 
 Here we are using Ansible's `command` module (used by default) and because
@@ -152,10 +156,10 @@ Here we are using Ansible's `command` module (used by default) and because
 Finally let's run:
 
 ```bash
-ansible testservers -m apt -b -a "name=nginx update_cache=yes state=present"
+ansible testservers -u pulsys -m apt -b -a "name=htop update_cache=yes state=present"
 ```
 
-Here we are using Ansible's `apt` module to run `apt -y update && apt -y install
-nginx`. It is important to state that you will rarely need to use this but most
+Here we are using Ansible's [`apt`](https://docs.ansible.com/ansible/latest/modules/apt_module.html?highlight=apt) module to run `apt -y update && apt -y install
+htop`. It is important to state that you will rarely need to use this but most
 ad-hoc commands are useful in quickly getting reports back from hosts under your
 management.
