@@ -44,7 +44,7 @@ brew cask install vagrant
 ```bash
 brew cask install virtualbox
 ```
-* Install Python and virtual environment software with:
+* Install Python and virtual environment management software with:
 ```
 brew install python pipenv
 ```
@@ -71,13 +71,17 @@ sudo apt -y install virtualbox
 ```bash
 sudo apt -y install vagrant
 ```
+
 * Setup Python and Pipenv software with:
 ```bash
 sudo apt -y install python-pip
+sudo apt -y install python-pip
+sudo pip install -U pip
 pip install --user pipenv
 ```
 
 ### Test your installation on both macOS and Ubuntu with:
+
 
 * Install Ansible and Molecule with:
 ```bash
