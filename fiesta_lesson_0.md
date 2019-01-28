@@ -71,8 +71,10 @@ sudo apt -y install virtualbox
 ```bash
 sudo apt -y install vagrant
 ```
-* Setup Python and virtual environment management software with:
+
+* Setup Python and Pipenv software with:
 ```bash
+sudo apt -y install python-pip
 sudo apt -y install python-pip
 sudo pip install -U pip
 pip install --user pipenv
@@ -80,7 +82,8 @@ pip install --user pipenv
 
 ### Test your installation on both macOS and Ubuntu with:
 
-* Configure your environment for this project with:
+
+* Install Ansible and Molecule with:
 ```bash
 pipenv shell
 ansible localhost -m ping

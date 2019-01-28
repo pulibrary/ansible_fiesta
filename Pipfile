@@ -6,8 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-molecule = "*"
+
 ansible = "*"
+molecule = "*"
 
 [requires]
 python_version = "3.7"
