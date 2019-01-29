@@ -84,5 +84,5 @@ actions on the host. Thus far we've seen.
 To run the playbooks described above run the following:
 
 ```bash
-ansible-playbook -u playbooks/nginx-install.yml
+ansible-playbook -u pulsys playbooks/nginx-install.yml
 ```
