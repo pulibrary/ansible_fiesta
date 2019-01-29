@@ -34,7 +34,7 @@ At a minimum that is all that is required to make a playbook.
 
 Our first playbook has six tasks and this is the first one
 
-```bash
+```yaml
 - name: remove nginx webserver
       apt:
         name: nginx
@@ -46,7 +46,7 @@ Our first playbook has six tasks and this is the first one
 The `name` is optional so it would be valid to have this task look like this
 (please don't :sweat_smile:):
 
-```bash
+```yaml
   - apt:
       name: nginx
       state: absent
@@ -78,3 +78,11 @@ actions on the host. Thus far we've seen.
 * `file` sets the attribute of a file, directory or symlink
 * `service` starts stops or restarts a service
 * `template` generates a new file to be copied to the hosts
+
+## Run the playbooks
+
+To run the playbooks described above run the following:
+
+```bash
+ansible-playbook -u playbooks/nginx-install.yml
+```
