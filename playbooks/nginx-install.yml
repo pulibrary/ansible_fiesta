@@ -19,7 +19,7 @@
 
     - name: copy nginx config file
       copy:
-        src: "playbooks/files/nginx.conf"
+        src: "files/nginx.conf"
         dest: "/etc/nginx/sites-available/default.conf"
 
     - name: enable new configuration
@@ -30,7 +30,7 @@
 
     - name: copy demo index.html
       template:
-        src: "playbooks/templates/index.html.j2"
+        src: "templates/index.html.j2"
         dest: "/var/www/html/index.html"
         mode: 0644
 
