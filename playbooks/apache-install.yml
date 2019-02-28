@@ -1,0 +1,31 @@
+---
+- name: configure webservers with apache php
+  hosts: testservers
+  become: true
+
+  handlers:
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted
+
+  tasks:
+
+    - name: remove nginx webserver
+      apt:
+        name: nginx
+        state: absent
+        purge: true
+      ignore_errors: true
+
+    - name: install apache and php
+      apt:
+        name: ["apache2", "libapache2-mod-php", "php"]
+        update_cache: true
+        state: present
+
+    - name: enable mod rewrite
+      apache2_module:
+        name: rewrite
+        state: present
+      notify: restart apache
