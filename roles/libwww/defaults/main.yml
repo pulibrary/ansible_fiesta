@@ -1,0 +1,14 @@
+---
+php_version: "7.2"
+drupal_db:
+  user: drupal
+  password: "tilInTIngyrAtr"
+  name: drupal
+
+drupal_docroot: "/var/www/html/drupal"
+
+drupal_site_name: "Test site"
+drupal_account_name: "admin"
+drupal_account_pass: "admin123"
+
+drupal_major_version: 8

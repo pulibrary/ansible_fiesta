@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+  ServerAdmin webmaster@localhost
+  ServerName Drupal7
+  DocumentRoot {{ drupal_docroot }}
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+    Require all denied
+  </Directory>
+  <Directory {{ drupal_docroot }}>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+    Require all granted
+  </Directory>
+</VirtualHost>
