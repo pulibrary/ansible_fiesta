@@ -35,4 +35,4 @@
     --db-url=mysql://{{ drupal_db.user }}:{{ drupal_db.password }}@localhost/{{ drupal_db.name }}
     -r {{ drupal_docroot }}
   when: not drush_status.stdout | search("Drupal bootstrap\s+:\s+Successful")
-  notify: "restart {{ webserver }}"
+  notify: restart apache
