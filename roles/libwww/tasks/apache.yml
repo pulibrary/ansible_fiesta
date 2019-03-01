@@ -1,10 +1,8 @@
 ---
 - name: Apache | Install Apache
-  apt: pkg={{ item }} state=installed
-  with_items:
-    - apache2
-    - apache2-utils
-    - "libapache2-mod-php{{ php_version }}"
+  apt:
+    pkg: ["apache2", "apache2-utils", "libapache2-mod-php{{ php_version }}"]
+    state: present
 
 - name: Apache | Enable modules
   apache2_module:

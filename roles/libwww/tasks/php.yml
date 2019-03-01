@@ -1,8 +1,9 @@
 ---
 - name: PHP | Add php PPA
-  apt_repository: repo='ppa:ondrej/php'
-              state=present
-              update_cache=yes
+  apt_repository:
+    repo: 'ppa:ondrej/php'
+    state: present
+    update_cache: true
 
 - name: PHP | install php packages
   apt:
