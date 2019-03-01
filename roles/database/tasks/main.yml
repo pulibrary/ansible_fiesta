@@ -47,4 +47,3 @@
     template: template0
   become: true
   become_user: postgres
-
