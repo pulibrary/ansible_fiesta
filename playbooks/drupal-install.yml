@@ -1,5 +1,5 @@
 ---
-- name: deploy drupal 
+- name: deploy drupal
   hosts: web
   vars_files:
     - secrets.yml
