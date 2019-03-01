@@ -27,7 +27,8 @@
   notify: restart postgres
 
 - name: create project locale
-  locale_gen: name={{ locale }}
+  locale_gen:
+    name: "{{ locale }}"
   become: true
 
 - name: create a user
