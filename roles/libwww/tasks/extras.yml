@@ -1,4 +1,9 @@
 ---
+- name: install git
+  apt:
+    name: git
+    state: present
+
 - name: Install Drush.
   get_url:
     url: "{{ drush_phar_url }}"

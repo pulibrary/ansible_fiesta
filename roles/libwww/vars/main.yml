@@ -7,7 +7,6 @@ php_packages:
   - "php{{ php_version }}-curl"
   - "php{{ php_version }}-json"
   - "php{{ php_version }}-gd"
-  - "php{{ php_version }}-mcrypt"
   - "php{{ php_version }}-odbc"
   - "php{{ php_version }}-mbstring"
   - "php{{ php_version }}-pgsql"

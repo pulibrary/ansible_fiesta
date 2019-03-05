@@ -31,12 +31,22 @@
     name: "{{ locale }}"
   become: true
 
+- name: reload postgresql
+  systemd:
+    name: postgresql
+    state: reloaded
+  become: true
+
 - name: create a user
   postgresql_user:
     name: "{{ database_user }}"
     password: "{{ db_pass }}"
+    #  login_host: "127.0.0.1"
+    #login_user: postgres
+    #login_password: "{{ db_pass }}"
+    #encrypted: true
+    state: present
   become: true
-  become_user: postgres
 
 - name: create the database
   postgresql_db:
@@ -47,4 +57,3 @@
     lc_collate: "{{ locale }}"
     template: template0
   become: true
-  become_user: postgres

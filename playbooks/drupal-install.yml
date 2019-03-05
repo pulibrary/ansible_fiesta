@@ -13,3 +13,5 @@
       database_name: "{{ drupal_proj_name }}"
       database_user: "{{ drupal_proj_name }}"
     - role: libwww
+      database_name: "{{ drupal_proj_name }}"
+      database_user: "{{ drupal_proj_name }}"
