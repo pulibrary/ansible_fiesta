@@ -32,7 +32,7 @@
     --site-name="{{ drupal_site_name }}"
     --account-name={{ drupal_account_name }}
     --account-pass={{ drupal_account_pass }}
-    --db-url=postgresql://{{ drupal_db.user }}:{{ drupal_db.password }}@localhost/{{ drupal_db.name }}
+    --db-url=pgsql://{{ drupal_db.user }}:{{ drupal_db.password }}@localhost/{{ drupal_db.name }}
     -r {{ drupal_docroot }}
   when: not drush_status.stdout | search("Drupal bootstrap\s+:\s+Successful")
   notify: restart apache
