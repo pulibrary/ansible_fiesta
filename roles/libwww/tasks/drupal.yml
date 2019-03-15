@@ -36,3 +36,4 @@
     -r {{ drupal_docroot }}
   when: not drush_status.stdout | search("Drupal bootstrap\s+:\s+Successful")
   notify: restart apache
+  ignore_errors: true
