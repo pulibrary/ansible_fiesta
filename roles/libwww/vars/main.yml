@@ -1,0 +1,25 @@
+---
+php_packages:
+  - "php{{ php_version }}"
+  - "php{{ php_version }}-fpm"
+  - "php{{ php_version }}-cli"
+  - "php{{ php_version }}-common"
+  - "php{{ php_version }}-curl"
+  - "php{{ php_version }}-json"
+  - "php{{ php_version }}-gd"
+  - "php{{ php_version }}-odbc"
+  - "php{{ php_version }}-mbstring"
+  - "php{{ php_version }}-pgsql"
+  - "php{{ php_version }}-xmlrpc"
+  - "php{{ php_version }}-opcache"
+  - "php{{ php_version }}-intl"
+  - "php{{ php_version }}-bz2"
+  - "php{{ php_version }}-xml"
+
+drush_version: "8.1.12"
+drush_phar_url: "https://github.com/drush-ops/drush/releases/download/{{ drush_version }}/drush.phar"
+
+composer_phar_url: "http://getcomposer.org/composer.phar"
+drupal_7_branch: "7.x"
+drupal_8_branch: "8.4.x"
+drupal_version_branch: "{{ drupal_8_branch if drupal_major_version == 8 else drupal_7_branch }}"

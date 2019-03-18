@@ -1,0 +1,4 @@
+---
+drupal_proj_name: fiesta_drupal
+locale: en_US.UTF-8
+database_port: 5432

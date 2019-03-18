@@ -1,0 +1,17 @@
+---
+- name: deploy drupal
+  hosts: web
+  vars_files:
+    - secrets.yml
+  pre_tasks:
+    - name: update the apt cache
+      apt:
+        update_cache: true
+
+  roles:
+    - role: database
+      database_name: "{{ drupal_proj_name }}"
+      database_user: "{{ drupal_proj_name }}"
+    - role: libwww
+      database_name: "{{ drupal_proj_name }}"
+      database_user: "{{ drupal_proj_name }}"
