@@ -72,11 +72,26 @@ sudo apt -y install virtualbox
 sudo apt -y install vagrant
 ```
 
-* Setup Python and Pipenv software with:
+* Setup Python and Pipenv software with: (Ubuntu bionic doesn't have Python
+  3.7.2)
+
 ```bash
-sudo apt -y install python-pip
-sudo apt -y install python-pip
-sudo pip install -U pip
+sudo apt -y install python-pip make build-essential libssl-dev zlib1g-dev libbz2-dev \
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
+xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
+exec "$SHELL"
+```
+
+This will install [pyenv](https://github.com/pyenv/pyenv) and the instructions
+above assume bash shell.
+
+```bash
+pyenv install 3.7.2
+pip install -U pip
 pip install --user pipenv
 ```
 
