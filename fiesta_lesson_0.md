@@ -21,6 +21,7 @@ participant has the following installed on their networked computer.
 * Python (with virtual environments and pip configured)
 * Ansible
 * Molecule
+* Docker
 
 ## Setup Environment for macOS
 
@@ -48,6 +49,7 @@ brew cask install virtualbox
 ```
 brew install python pipenv
 ```
+* Install [Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
 
 ## Setup Environment for Ubuntu Bionic
 
@@ -93,6 +95,15 @@ above assume bash shell.
 pyenv install 3.7.2
 pip install -U pip
 pip install --user pipenv
+```
+
+* Install Docker
+```bash
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+sudo apt update
+sudo apt install docker-ce
 ```
 
 ### Test your installation on both macOS and Ubuntu with:
