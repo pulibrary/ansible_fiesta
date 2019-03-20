@@ -74,3 +74,34 @@ verifier:
     v: 1
   directory: ./tests/
 ```
+
+Molecule provides a series of [consecutive
+steps](https://molecule.readthedocs.io/en/latest/configuration.html#scenario).
+The steps under the test sequence that we will use the most are `create`,
+`converge`, `verify`, and `destroy`.
+
+Let's run `molecule create` If everything went fine, the log output should look
+something like this:
+
+```bash
+TASK [Build an Ansible compatible image] ***************************************
+    skipping: [localhost] => (item={'changed': False, 'skipped': True, 'skip_reason': 'Conditional result was False', '_ansible_no_log': False, 'item': {'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True}, '_ansible_item_result': True, '_ansible_ignore_errors': None, '_ansible_item_label': {'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True}})
+
+    TASK [Create docker network(s)] ************************************************
+
+    TASK [Create molecule instance(s)] *********************************************
+    changed: [localhost] => (item={'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True})
+
+    TASK [Wait for instance(s) creation to complete] *******************************
+    changed: [localhost] => (item={'started': 1, 'finished': 0, 'ansible_job_id': '934147887097.62716', 'results_file': '/Users/kayiwa/.ansible_async/934147887097.62716', '_ansible_parsed': True, 'changed': True, '_ansible_no_log': False, 'failed': False, 'item': {'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True}, '_ansible_item_result': True, '_ansible_ignore_errors': None, '_ansible_item_label': {'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True}})
+
+    PLAY RECAP *********************************************************************
+    localhost                  : ok=3    changed=2    unreachable=0    failed=0
+
+
+--> Scenario: 'default'
+--> Action: 'prepare'
+Skipping, prepare playbook not configured.
+```
+
+Molecule destroy would delete this docker image but lets write a few tests
