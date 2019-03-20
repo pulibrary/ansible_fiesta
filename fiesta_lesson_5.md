@@ -104,4 +104,50 @@ TASK [Build an Ansible compatible image] ***************************************
 Skipping, prepare playbook not configured.
 ```
 
-Molecule destroy would delete this docker image but lets write a few tests
+`molecule destroy` would delete this docker container but we want to write a few
+tests for our nginx role
+
+### Write tests with Testinfra
+
+_Testinfra_ is the *Python Equivalent* to [Serverspec](https://serverspec.org/)
+which is based on [Ruby's BDD framework RSpec](http://rspec.info/). Our use case
+will be:
+
+* nginx is installed
+* `www-data` user and group exist
+* http port is on 80
+* nginx service is enabled and running
+
+We will assert on these necessary steps inside our
+testcase.[roles/nginx/molecule/default/tests/test_nginx.py](roles/nginx/molecule/default/tests/test_nginx.py) to see how this would be implemented with Testinfra:
+
+```python
+import os
+
+import testinfra.utils.ansible_runner
+
+testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
+    os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
+
+
+def test_nginx_user(host):
+    user = host.user('www-data')
+
+    assert user.exists
+    assert user.group == 'www-data'
+    assert user.shell == '/usr/sbin/nologin'
+    assert user.home == '/var/www'
+
+
+def test_http_port(host):
+    port = host.socket('tcp://0.0.0.0:80')
+
+    assert port.is_listening
+
+
+def test_nginx_service(host):
+    service = host.service('nginx')
+
+    assert service.is_enabled
+    assert service.is_running
+```
