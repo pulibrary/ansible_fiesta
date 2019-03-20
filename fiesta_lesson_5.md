@@ -156,4 +156,15 @@ Testinfra is a plugin to the pytest test engine. It provides a [pytest
 fixture](https://docs.pytest.org/en/latest/fixture.html#fixture) named "host".
 In order to use the host fixture we need to declare it as an argument of our
 test functions. The host fixture provides the [Testinfra
-Modules](https://testinfra.readthedocs.io/en/latest/modules.html).
+Modules](https://testinfra.readthedocs.io/en/latest/modules.html).that allow us
+to test the state of our infrastructure. In our example we asserted if there is
+a [service
+running](https://testinfra.readthedocs.io/en/latest/modules.html#service), if
+certain [sockets were in
+use](https://testinfra.readthedocs.io/en/latest/modules.html#socket) and if
+certain packages were installed.
+
+In order to test this on this repository we will create a symbolic link to
+`roles/nginx/molecule/default/tests/test_nginx.py` to the
+`molecule/default/tests/test_nginx.py` location as defined in the
+`molecule/default/molecule.yml` file in the verifier section.

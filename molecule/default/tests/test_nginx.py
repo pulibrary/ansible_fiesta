@@ -1,0 +1,1 @@
+../../../roles/nginx/molecule/default/tests/test_nginx.py
