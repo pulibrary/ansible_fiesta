@@ -67,7 +67,15 @@ molecule init role -r roles/nginx
 
 This will create a new directory under `roles` named "nginx" which will look
 like and have the format discussed in our [Roles](fiesta_lesson_3.md) with one
-additional new directory named `molecule`. All our tests will be under
-`molecule/default/tests` directory. For now we are creating a molecule directory
-at the root of the repository which will allow us using symbolic links to test
-multiple roles and is also expected by Travis and/or CircleCI
+additional new directory named `molecule`. As a refresher it will have an
+Ansible best practices directory with
+
+* default - default values to variables for the role
+* handlers - specific handlers to notify based on actions in Ansible
+* meta - Ansible-Galaxy info for the role and/or dependencies
+* molecule - molecule specific information (configuration, instance information,
+  playbooks to run with molecule
+* README.md - Information about the role and really important reminder of the
+  importance of documentation
+* tasks - tasks for the role
+* vars - other variables for the role (generally ones that change infrequently)
