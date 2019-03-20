@@ -64,3 +64,10 @@ Let's create an nginx role that will have tests in it.
 ```bash
 molecule init role -r roles/nginx
 ```
+
+This will create a new directory under `roles` named "nginx" which will look
+like and have the format discussed in our [Roles](fiesta_lesson_3.md) with one
+additional new directory named `molecule`. All our tests will be under
+`molecule/default/tests` directory. For now we are creating a molecule directory
+at the root of the repository which will allow us using symbolic links to test
+multiple roles and is also expected by Travis and/or CircleCI
