@@ -1,2 +1,44 @@
 ---
-# tasks file for roles/nginx
+- name: Check if nginx is installed
+  stat:
+    path: "/usr/sbin/nginx"
+  register: nginx_register_installed
+
+- name: Add nginx APT GPG key
+  apt_key:
+    id: "{{ nginx__flavor_apt_key_id }}"
+    state: present
+    keyserver: "hkp://pool.sks-keyservers.net"
+  register: nginx__register_apt_key
+  until: nginx__register_apt_key is succeeded
+  when: (nginx_flavor in [ "nginx.org", "passenger" ])
+
+- name: Add nginx APT repository
+  apt_repository:
+    repo: '{{ nginx__flavor_apt_repository }}'
+    state: present
+    update_cache: true
+  when: (nginx_flavor in [ "nginx.org", "passenger" ])
+
+- name: install nginx
+  package:
+    name: "{{ nginx__flavor_packages }}"
+    state: present
+  register: nginx__register_packages_present
+  until: nginx__register_packages_present is succeeded
+
+- name: Create default nginx directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: 0755
+  with_items:
+    - "/etc/nginx/sites-default.d"
+    - "/etc/nginx/sites-available"
+    - "/etc/nginx/sites-enabled"
+    - "/etc/nginx/snippets"
+
+- include: 'passenger_config.yml'
+  when: nginx_flavor == "passenger"
