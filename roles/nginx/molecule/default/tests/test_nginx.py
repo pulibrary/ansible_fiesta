@@ -6,6 +6,12 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
+def test_is_nginx_installed(host):
+    package_nginx = host.package('nginx')
+
+    assert package_nginx.is_installed
+
+
 def test_nginx_user(host):
     user = host.user('www-data')
 

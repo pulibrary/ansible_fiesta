@@ -151,3 +151,9 @@ def test_nginx_service(host):
     assert service.is_enabled
     assert service.is_running
 ```
+
+Testinfra is a plugin to the pytest test engine. It provides a [pytest
+fixture](https://docs.pytest.org/en/latest/fixture.html#fixture) named "host".
+In order to use the host fixture we need to declare it as an argument of our
+test functions. The host fixture provides the [Testinfra
+Modules](https://testinfra.readthedocs.io/en/latest/modules.html).
