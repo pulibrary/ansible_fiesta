@@ -12,6 +12,12 @@ def test_is_nginx_installed(host):
     assert package_nginx.is_installed
 
 
+def test_nginx_config_exists(host):
+    nginx_config = host.file('/etc/nginx/nginx.conf')
+
+    assert nginx_config.exists
+
+
 def test_nginx_user(host):
     user = host.user('www-data')
 
