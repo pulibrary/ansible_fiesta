@@ -1,1 +1,3 @@
 secrets.yml
+# hide keys
+pulsys_rsa_key*
