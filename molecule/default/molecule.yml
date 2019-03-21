@@ -6,7 +6,10 @@ driver:
 platforms:
   - name: instance
     image: "pulibrary/puldocker-${MOLECULE_DISTRO:-ubuntu1804}-ansible:latest"
+    # image: solita/ubuntu-systemd
+    # image_version: latest
     privileged: true
+    # command: "/sbin/init"
     pre_build_image: true
 volumes:
   - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
