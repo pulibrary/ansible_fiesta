@@ -1,7 +1,7 @@
 ---
 # defaults file for roles/nginx
 nginx__flavor_apt_key_id: "{{ nginx__flavor_apt_key_id_map[nginx_flavor]|d() }}"
-nginx_flavor: "passenger"
+nginx_flavor: "{{ non_passenger_nginx | default('passenger') }}"
 nginx__flavor_apt_repository: "{{ nginx__flavor_apt_repository_map[nginx_flavor]|d() }}"
 nginx__flavor_apt_key_id_map:
   "nginx.org": "573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62"
