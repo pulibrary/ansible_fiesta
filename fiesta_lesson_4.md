@@ -79,3 +79,6 @@ Ansible best practices directory with
   importance of documentation
 * tasks - tasks for the role
 * vars - other variables for the role (generally ones that change infrequently)
+
+With our Testing Environment set up we can now [Write some
+tests](fiesta_lesson_5.md)
