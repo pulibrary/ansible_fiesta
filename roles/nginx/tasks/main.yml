@@ -42,3 +42,8 @@
 
 - include: 'passenger_config.yml'
   when: nginx_flavor == "passenger"
+
+- name: Restart nginx on first install to bypass missing pid bug
+  service:
+    name: nginx
+    state: restarted
