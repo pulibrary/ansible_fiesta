@@ -156,15 +156,166 @@ Testinfra is a plugin to the pytest test engine. It provides a [pytest
 fixture](https://docs.pytest.org/en/latest/fixture.html#fixture) named "host".
 In order to use the host fixture we need to declare it as an argument of our
 test functions. The host fixture provides the [Testinfra
-Modules](https://testinfra.readthedocs.io/en/latest/modules.html).that allow us
+Modules](https://testinfra.readthedocs.io/en/latest/modules.html) that allow us
 to test the state of our infrastructure. In our example we asserted if there is
 a [service
 running](https://testinfra.readthedocs.io/en/latest/modules.html#service), if
 certain [sockets were in
 use](https://testinfra.readthedocs.io/en/latest/modules.html#socket) and if
-certain packages were installed.
+certain packages were installed. Testinfra uses `pytest` and makes is possible
+to test the system after the role is run to ensure the role has the expected
+results.
 
-In order to test this on this repository we will create a symbolic link to
-`roles/nginx/molecule/default/tests/test_nginx.py` to the
-`molecule/default/tests/test_nginx.py` location as defined in the
-`molecule/default/molecule.yml` file in the verifier section.
+This role is simple and our tests will be. We are installing `nginx` and nothing
+more. The [testinfra quickstart](https://testinfra.readthedocs.io/en/latest/)
+has good examples you can borrow from like I did. :smile:
+
+### Running Molecule
+
+With our roles and tests written, we could just run `molecule test` and work
+through all of steps. I have preferred using `create`, `converge`, `verify` and
+`test` all separately and in that order. This has made tracking the inevitable
+failures quicker. In addition this repo has a `Vagrantfile` that allows me to
+spin up instances to see how installation works
+
+#### Molecule create
+
+The first step is the creation of a docker container. Molecule will create the
+docker container based on the provided image provided in the `molecule.yml`
+configuration.
+
+```zsh
+(ansible_fiesta) ansible_fiesta molecule % molecule create
+--> Validating schema /Users/kayiwa/Documents/dev/pulibrary/ansible_fiesta/molecule/default/molecule.yml.
+Validation completed successfully.
+--> Test matrix
+
+└── default
+    ├── create
+    └── prepare
+
+--> Scenario: 'default'
+--> Action: 'create'
+
+    PLAY [Create] ******************************************************************
+
+    TASK [Log into a Docker registry] **********************************************
+    skipping: [localhost] => (item={'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True})
+...
+```
+
+#### Molecule converge
+
+`molecule create` only acts as orchestration. The `molecule converge` step is
+what runs the playbook that will call our role to configure the launched
+container. A majority of the time will be spent here. Making improvements to our
+role and running `molecule converge`.
+
+```zsh
+(ansible_fiesta) ansible_fiesta molecule % molecule converge
+--> Validating schema /Users/kayiwa/Documents/dev/pulibrary/ansible_fiesta/molecule/default/molecule.yml.
+Validation completed successfully.
+--> Test matrix
+
+└── default
+    ├── dependency
+    ├── create
+    ├── prepare
+    └── converge
+
+--> Scenario: 'default'
+--> Action: 'dependency'
+Skipping, dependency is disabled.
+--> Scenario: 'default'
+--> Action: 'create'
+Skipping, instances already created.
+--> Scenario: 'default'
+--> Action: 'prepare'
+Skipping, prepare playbook not configured.
+--> Scenario: 'default'
+--> Action: 'converge'
+
+    PLAY [Converge] ****************************************************************
+
+    TASK [Gathering Facts] *********************************************************
+    ok: [instance]
+
+    TASK [roles/nginx : Check if nginx is installed] *******************************
+    ok: [instance]
+
+    TASK [roles/nginx : Add nginx APT GPG key] *************************************
+    changed: [instance]
+
+    TASK [roles/nginx : Add nginx APT repository] **********************************
+    changed: [instance]
+
+    TASK [roles/nginx : install nginx] *********************************************
+    changed: [instance]
+
+    TASK [roles/nginx : Create default nginx directories] **************************
+    ok: [instance] => (item=/etc/nginx/sites-available)
+    ok: [instance] => (item=/etc/nginx/sites-enabled)
+...
+```
+
+#### Molecule verify
+
+`molecule verify` will run our tests and as this example shows there's some
+errors that it found. We would continue fix the problem. (this one is
+particularly tricky because we would need a docker image that can run systemd) 
+
+```zsh
+(ansible_fiesta) ansible_fiesta molecule % molecule verify
+--> Validating schema /Users/kayiwa/Documents/dev/pulibrary/ansible_fiesta/molecule/default/molecule.yml.
+Validation completed successfully.
+--> Test matrix
+
+└── default
+    └── verify
+
+--> Scenario: 'default'
+--> Action: 'verify'
+--> Executing Testinfra tests found in /Users/kayiwa/Documents/dev/pulibrary/ansible_fiesta/molecule/default/./tests//...
+    ============================= test session starts ==============================
+    platform darwin -- Python 3.7.2, pytest-4.3.1, py-1.8.0, pluggy-0.9.0 -- /Users/kayiwa/.local/share/virtualenvs/ansible_fiesta-1KN6kVYA/bin/python3.7
+    rootdir: /Users/kayiwa/Documents/dev/pulibrary/ansible_fiesta/molecule/default, inifile:
+    plugins: testinfra-1.16.0
+collected 5 items
+
+    ::test_is_nginx_installed[ansible://instance] PASSED                     [ 20%]
+    ::test_nginx_config_exists[ansible://instance] PASSED                    [ 40%]
+    ::test_nginx_user[ansible://instance] PASSED                             [ 60%]
+    ::test_http_port[ansible://instance] PASSED                              [ 80%]
+    ::test_nginx_service[ansible://instance] FAILED                          [100%]
+
+    =================================== FAILURES ===================================
+    ____________________ test_nginx_service[ansible://instance] ____________________
+
+    host = <testinfra.host.Host object at 0x10d2cbbe0>
+
+        def test_nginx_service(host):
+            service = host.service('nginx')
+
+            assert service.is_enabled
+    >       assert service.is_running
+
+    ../../roles/nginx/molecule/default/tests/test_nginx.py:40:
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    self = <service nginx>
+
+        @property
+        def is_running(self):
+            return self.run_expect(
+    >           [0, 3], "systemctl is-active %s", self.name).rc == 0
+    E       AssertionError: Unexpected exit code 1 for CommandResult(command='systemctl is-active nginx', exit_status=1, stdout='', stderr="System has not been booted with systemd as init system (PID 1). Can't operate.")
+    E       assert 1 in [0, 3]
+    E        +  where 1 = CommandResult(command='systemctl is-active nginx', exit_status=1, stdout='', stderr="System has not been booted with systemd as init system (PID 1). Can't operate.").rc
+
+    /Users/kayiwa/.local/share/virtualenvs/ansible_fiesta-1KN6kVYA/lib/python3.7/site-packages/testinfra/modules/service.py:107: AssertionError
+```
+
+#### Molecule test
+
+When we resolve this would run `molecule test`. This would destroy any existing
+docker containers, check the syntax on the role, create a new docker container,
+run the playbook, lint and run our tests.
