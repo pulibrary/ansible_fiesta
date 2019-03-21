@@ -4,7 +4,7 @@
 
 In order to allow us to test multiple roles we create similar molecule directory
 at the base of the repository. This will be used in conjunction with
-symbolically linked tests in the individual repository. This is also expected by
+symbolically linked tests to the individual role. This is also expected by
 Travis and CircleCI
 
 Our molecule is configured with the
