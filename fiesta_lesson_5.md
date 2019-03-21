@@ -178,31 +178,6 @@ through all of steps. I have preferred using `create`, `converge`, `verify` and
 failures quicker. In addition this repo has a `Vagrantfile` that allows me to
 spin up instances to see how installation works
 
-#### Molecule create
-
-The first step is the creation of a docker container. Molecule will create the
-docker container based on the provided image provided in the `molecule.yml`
-configuration.
-
-```zsh
-(ansible_fiesta) ansible_fiesta molecule % molecule create
---> Validating schema /Users/kayiwa/Documents/dev/pulibrary/ansible_fiesta/molecule/default/molecule.yml.
-Validation completed successfully.
---> Test matrix
-
-└── default
-    ├── create
-    └── prepare
-
---> Scenario: 'default'
---> Action: 'create'
-
-    PLAY [Create] ******************************************************************
-
-    TASK [Log into a Docker registry] **********************************************
-    skipping: [localhost] => (item={'name': 'instance', 'image': 'pulibrary/puldocker-ubuntu1804-ansible:latest', 'privileged': True, 'pre_build_image': True})
-...
-```
 
 #### Molecule converge
 
