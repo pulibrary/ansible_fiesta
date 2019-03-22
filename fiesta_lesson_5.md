@@ -80,7 +80,7 @@ steps](https://molecule.readthedocs.io/en/latest/configuration.html#scenario).
 The steps under the test sequence that we will use the most are `create`,
 `converge`, `verify`, and `destroy`.
 
-Let's run `molecule create` If everything went fine, the log output should look
+From the root of the repository, let's run `molecule create` If everything went fine, the log output should look
 something like this:
 
 ```bash
