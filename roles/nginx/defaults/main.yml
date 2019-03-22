@@ -1,0 +1,29 @@
+---
+# defaults file for roles/nginx
+nginx__flavor_apt_key_id: "{{ nginx__flavor_apt_key_id_map[nginx_flavor]|d() }}"
+nginx_flavor: "{{ non_passenger_nginx | default('passenger') }}"
+nginx__flavor_apt_repository: "{{ nginx__flavor_apt_repository_map[nginx_flavor]|d() }}"
+nginx__flavor_apt_key_id_map:
+  "nginx.org": "573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62"
+  "passenger": "16378A33A6EF16762922526E561F9B9CAC40B2F7"
+nginx__flavor_apt_repository_map:
+  "nginx.org": "deb https://nginx.org/packages/{{ ansible_distribution | lower }}/ {{ nginx__flavor_distribution_release }} nginx"
+  "passenger": "deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ nginx__flavor_distribution_release }} main"
+nginx__flavor_packages: "{{ nginx_flavor_package_map[nginx_flavor] }}"
+nginx_flavor_package_map:
+  "full": ["nginx-full"]
+  "extras": ["nginx-extras"]
+  # nginx with support for Phusion Passenger compiled in. Requires external APT
+  # repository. See https://phusionpassenger.com/ for more details.
+  "passenger":
+    - "nginx-extras"
+    - "ruby"
+    - "{{ 'passenger'
+          if (nginx__flavor_distribution_release in
+              ['bionic', 'trusty', 'xenial'])
+          else 'libnginx-mod-http-passenger' }}"
+  "nginx.org": ["nginx"]
+nginx_user: "www-data"
+nginx_passenger_options: false
+nginx_passenger_default_min_instances: "{{ ansible_processor_cores }}"
+nginx__flavor_distribution_release: "{{ ansible_distribution_release }}"

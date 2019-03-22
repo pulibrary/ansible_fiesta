@@ -14,6 +14,6 @@ aforementioned repository.
 * [Ansible Install and Environment Setup](fiesta_lesson_0.md)
 * [Playbooks](fiesta_lesson_1.md)
 * [Playbooks + Inventories + Variables + Facts](fiesta_lesson_2.md)
-* Roles
-* Roles + Testing
+* [Roles](fiesta_lesson_3.md)
+* [Roles + Testing](fiesta_lesson_4.md)
 * Debugging Ansible

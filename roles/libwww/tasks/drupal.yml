@@ -25,7 +25,7 @@
     recurse: yes
     mode: a+w
   when: not drush_status.stdout | search("Drupal bootstrap\s+:\s+Successful")
-    
+
 - name: Drupal | Drush site install if not already installed
   command: >
     drush site-install standard -y
