@@ -18,8 +18,7 @@ before_script:
 molecule:
   stage: test
   tags:
-    - pip36
-    - docker
+    - ansible
   script:
     - docker -v
     - python -V
