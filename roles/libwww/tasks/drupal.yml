@@ -22,7 +22,7 @@
 - name: Drupal | Give appropriate permissions for files directory
   file:
     dest: "{{ drupal_docroot }}/sites/default/files"
-    recurse: yes
+    recurse: true
     mode: a+w
   when: not drush_status.stdout | search("Drupal bootstrap\s+:\s+Successful")
 

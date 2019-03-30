@@ -42,9 +42,9 @@
     name: "{{ database_user }}"
     password: "{{ db_pass }}"
     #  login_host: "127.0.0.1"
-    #login_user: postgres
-    #login_password: "{{ db_pass }}"
-    #encrypted: true
+    # login_user: postgres
+    # login_password: "{{ db_pass }}"
+    # encrypted: true
     state: present
   become: true
 
