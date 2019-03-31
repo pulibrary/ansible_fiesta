@@ -19,6 +19,7 @@ molecule:
   stage: test
   tags:
     - ansible
+    - molecule
   script:
     - docker -v
     - python -V
