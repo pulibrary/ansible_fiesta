@@ -2,28 +2,11 @@
 stages:
   - test
 
-variables:
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip"
-
-cache:
-  paths:
-    - .pip/
-    - virtenv/
-
-before_script:
-  - pip3.6 install virtualenv
-  - virtualenv virtenv
-  - source virtenv/bin/activate
-
 molecule:
   stage: test
   tags:
     - ansible
     - molecule
   script:
-    - docker -v
-    - python -V
-    - pip install ansible molecule docker
-    - ansible --version
     - molecule --version
     - molecule test
