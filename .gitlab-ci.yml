@@ -23,5 +23,4 @@ stage-tests:
     - apk add --update python py-pip python-dev gcc libc-dev libffi-dev openssl-dev linux-headers make
     - pip install --upgrade pip
     - pip install -r requirements.txt
-    - pip install -r requirements-tests.txt
     - molecule test
