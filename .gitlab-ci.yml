@@ -17,7 +17,8 @@ stages:
 stage-tests:
   stage: tests
   tags:
-    - privileged-runner
+    - ansible
+    - molecule
   script:
     - apk add --update python py-pip python-dev gcc libc-dev libffi-dev openssl-dev linux-headers make
     - pip install --upgrade pip
