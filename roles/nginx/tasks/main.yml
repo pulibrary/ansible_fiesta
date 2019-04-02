@@ -8,7 +8,7 @@
   apt_key:
     id: "{{ nginx__flavor_apt_key_id }}"
     state: present
-    keyserver: "hkp://pool.sks-keyservers.net"
+    keyserver: "hkp://pool.sks-keyservers.net:80"
   register: nginx__register_apt_key
   until: nginx__register_apt_key is succeeded
   when: (nginx_flavor in [ "nginx.org", "passenger" ])
@@ -46,3 +46,4 @@
   service:
     name: nginx
     state: restarted
+  changed_when: false
