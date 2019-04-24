@@ -20,7 +20,7 @@ group called `all` which includes all of the hosts in the inventory.
 Run:
 
 ```bash
-ansible all -a "date"
+ansible all -u pulsys -a "date"
 ```
 
 Take a look at the
