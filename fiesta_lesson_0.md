@@ -109,8 +109,12 @@ sudo apt install docker-ce
 ### Test your installation on both macOS and Ubuntu with:
 
 
+You will need to run the following steps inside your cloned repository.
+
 * Install Ansible and Molecule with:
 ```bash
+pipenv sync
+pipenv install
 pipenv shell
 ansible localhost -m ping
 ```
