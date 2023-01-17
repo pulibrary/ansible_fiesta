@@ -15,13 +15,12 @@ participant has the following installed on their networked computer.
 * A Terminal Emulator
 * A Package manager
 * A Text Editor
-* Git
-* Vagrant
-* Virtualbox
-* Python (with virtual environments and pip configured)
 * Ansible
-* Molecule
+* asdf
 * Docker
+* Git
+* Molecule
+* Python (with virtual environments and pip configured)
 
 ## Setup Environment for macOS
 
@@ -29,21 +28,15 @@ participant has the following installed on their networked computer.
   [iTerm2](https://www.iterm2.com/index.html))
 * Follow the instructions on the [Homebrew Page](https://brew.sh/) to install
   the package manager.
-* Select a programmers Text Editor (For example VIm, Atom)
+* Select a programmers Text Editor (For example VIm, VSCode)
+
 ```bash
-brew install vim
+brew install neovim
 ```
+
 * Install Git using the Homebrew package manager with:
 ```bash
 brew install git
-```
-* Install Vagrant using the Homebrew package manager with:
-```bash
-brew cask install vagrant
-```
-* Install Virtualbox with the Homebrew package manager with:
-```bash
-brew cask install virtualbox
 ```
 * Install Python and virtual environment management software with:
 ```
@@ -65,16 +58,8 @@ sudo apt -y install vim
 ```bash
 sudo apt -y install git
 ```
-* Install Virtualbox using `apt` with:
-```bash
-sudo apt -y install virtualbox
-```
-* Install Vagrant using `apt` with:
-```bash
-sudo apt -y install vagrant
-```
 
-* Setup Python and Pipenv software with: (Ubuntu bionic doesn't have Python
+* Setup Python and Pipenv software with: (Ubuntu Jammy Jellyfish doesn't have Python
   3.7.2)
 
 ```bash
