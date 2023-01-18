@@ -15,13 +15,12 @@ participant has the following installed on their networked computer.
 * A Terminal Emulator
 * A Package manager
 * A Text Editor
-* Git
-* Vagrant
-* Virtualbox
-* Python (with virtual environments and pip configured)
 * Ansible
-* Molecule
+* asdf
 * Docker
+* Git
+* Molecule
+* Python (with virtual environments and pip configured)
 
 ## Setup Environment for macOS
 
@@ -29,73 +28,55 @@ participant has the following installed on their networked computer.
   [iTerm2](https://www.iterm2.com/index.html))
 * Follow the instructions on the [Homebrew Page](https://brew.sh/) to install
   the package manager.
-* Select a programmers Text Editor (For example VIm, Atom)
+* Select a programmers Text Editor (For example VIm, VSCode)
+
 ```bash
-brew install vim
+brew install neovim
 ```
+
+Download [VSCode](https://code.visualstudio.com/) and add the following
+
+  * [YAML Language Support](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+  * [Ansible Language Support](https://marketplace.visualstudio.com/items?itemName=redhat.ansible)
+
 * Install Git using the Homebrew package manager with:
+
 ```bash
 brew install git
 ```
-* Install Vagrant using the Homebrew package manager with:
-```bash
-brew cask install vagrant
-```
-* Install Virtualbox with the Homebrew package manager with:
-```bash
-brew cask install virtualbox
-```
 * Install Python and virtual environment management software with:
+
+Install and configure [ASDF](https://asdf-vm.com/)
+
 ```
-brew install python pipenv
+asdf install
+pip install --upgrade pipenv
 ```
 * Install [Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
 
-## Setup Environment for Ubuntu Bionic
+## Setup Environment for Ubuntu Jammy Jellyfish
 
-* We will us the `apt` package manager
-```bash
-sudo add-apt-repository multiverse && sudo apt -y update
-```
 * Select a programmers Text Editor (For example VIm, nano)
 ```bash
-sudo apt -y install vim
+sudo apt -y install neovim
 ```
+Download [VSCode](https://code.visualstudio.com/) and add the following
+
+  * [YAML Language Support](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)
+  * [Ansible Language Support](https://marketplace.visualstudio.com/items?itemName=redhat.ansible)
+
+* We will use the `asdf` [ASDF](https://asdf-vm.com)
+
+```bash
+asdf install
+pip install --upgrade pipenv
+```
+
 * Install Git using `apt` with:
 ```bash
 sudo apt -y install git
 ```
-* Install Virtualbox using `apt` with:
-```bash
-sudo apt -y install virtualbox
-```
-* Install Vagrant using `apt` with:
-```bash
-sudo apt -y install vagrant
-```
 
-* Setup Python and Pipenv software with: (Ubuntu bionic doesn't have Python
-  3.7.2)
-
-```bash
-sudo apt -y install python-pip make build-essential libssl-dev zlib1g-dev libbz2-dev \
-libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bash_profile
-exec "$SHELL"
-```
-
-This will install [pyenv](https://github.com/pyenv/pyenv) and the instructions
-above assume bash shell.
-
-```bash
-pyenv install 3.7.2
-pip install -U pip
-pip install --user pipenv
-```
 
 * Install Docker
 ```bash
