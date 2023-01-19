@@ -7,11 +7,33 @@ require access to a VM in our datacenter.
 Make sure you can VPN onto the princeton network. You will be unable to do any
 of the exercises.
 
+## Playbook Zero
+
+Let's repeat all the ad-hoc commands we ran in [Fiesta 0](./fiesta_lesson_0.md) as one [helloworld](./playbooks/helloworld.yml)
+
+```yaml
+---
+- name: Fiesta one ad-hoc commands
+  hosts: netid_sandbox
+  become: true
+  remote_user: pulsys
+  tasks:
+    - name: pong message
+      ansible.builtin.ping:
+...
+```  
+
+Let's do a dry run of our playbook with the `--check` flag. 
+
+```zsh
+ansible-playbook playbooks/helloworld.yml --check
+```
+
 ## Playbook One
 
-We will configure the two test servers to use the
+We will configure your sandbox servers to use the
 [Nginx](https://www.nginx.com/) webserver. This will not differ significantly
-than installing `htop` in our first lesson. While the ad-hoc command ran a step
+than installing `htop` in our [first lesson](fiesta_lesson_0.md). While the ad-hoc command ran a step
 on the remote machine our playbook below will consist of a series of tasks to
 set up and configure the webserver
 
@@ -36,7 +58,7 @@ Our first playbook has six tasks and this is the first one
 
 ```yaml
 - name: remove nginx webserver
-      apt:
+      ansible.builtin.apt:
         name: nginx
         state: absent
         purge: true
@@ -47,7 +69,7 @@ The `name` is optional so it would be valid to have this task look like this
 (please don't :sweat_smile:):
 
 ```yaml
-  - apt:
+  - ansible.builtin.apt:
       name: nginx
       state: absent
       purge: true
@@ -83,6 +105,6 @@ actions on the host. Thus far we've seen.
 
 To run the playbooks described above run the following:
 
-```bash
+```zsh
 ansible-playbook -u pulsys playbooks/nginx-install.yml
 ```

@@ -93,7 +93,7 @@ sudo apt install docker-ce
 You will need to run the following steps inside your cloned repository.
 
 * Install Ansible and Molecule with:
-```bash
+```zsh
 pipenv sync
 pipenv install
 pipenv shell
@@ -138,12 +138,27 @@ Instructions](https://help.github.com/articles/adding-a-new-ssh-key-to-your-gith
 to add your keys to your account. These keys will be appended to the `pulsys`
 user needed for future activities in these classes.
 
+## Inventory
+
+To manage a remote host Ansible will look for an inventory file of the hosts that will be managed. (by default `/etc/ansible/hosts`) In our case we will create a file called `inventory/sandbox-<yournetid>` (this file will be ignored based on [./.gitignore](/.gitignore) by git) which will look like [the example inventory file](./inventory/example-sandbox-yournetid).
+
+Run the following commands (if you haven't already):
+
+```zsh
+pipenv sync
+pipenv shell
+```
+
+This will install all the software defined in [Pipfile](./Pipfile) which includes Ansible and launch your virtual environment.
+
+Then try to use the following Ansible:
+
 ## Ansible ad-hoc
 
 With your keys added try the following ad-hoc commands
 
-```bash
-ansible testservers -u pulsys -m ping -vvvv
+```zsh
+ansible netid_sandbox -u pulsys -m ping -vvvv
 ```
 
 We will see that the "ping" module has succeeded. The `"changed" : false` output
@@ -154,14 +169,14 @@ levels in the output.
 
 Run the following now:
 
-```bash
-ansible testservers -u pulsys -m command -a uptime
+```zsh
+ansible netid_sandbox -m command -a uptime -u pulsys
 ```
 
 and
 
-```bash
-ansible testservers -u pulsys -m command -b -a "tail /var/log/syslog"
+```zsh
+ansible netid_sandbox -u pulsys -m command -b -a "tail /var/log/syslog" -u pulsys
 ```
 
 Here we are using Ansible's
@@ -171,8 +186,8 @@ Here we are using Ansible's
 
 Finally let's run:
 
-```bash
-ansible testservers -u pulsys -m apt -b -a "name=htop update_cache=yes state=present"
+```zsh
+ansible netid_sandbox -u pulsys -m apt -b -a "name=htop update_cache=yes state=present"
 ```
 
 Here we are using Ansible's [`apt`](https://docs.ansible.com/ansible/latest/modules/apt_module.html?highlight=apt) module to run `apt -y update && apt -y install
