@@ -1,40 +1,40 @@
 ---
 - name: configure webservers with nginx
-  hosts: testservers
+  hosts: all
   become: true
   tasks:
 
     - name: remove nginx webserver
-      apt:
+      ansible.builtin.apt:
         name: nginx
         state: absent
         purge: true
       ignore_errors: true
 
     - name: install nginx webserver
-      apt:
+      ansible.builtin.apt:
         name: nginx
         update_cache: true
         state: present
 
     - name: copy nginx config file
-      copy:
+      ansible.builtin.copy:
         src: "files/nginx.conf"
         dest: "/etc/nginx/sites-available/default.conf"
 
     - name: enable new configuration
-      file:
+      ansible.builtin.file:
         src: "/etc/nginx/sites-available/default.conf"
         dest: "/etc/nginx/sites-enabled/default.conf"
         state: link
 
     - name: copy demo index.html
-      template:
+      ansible.builtin.template:
         src: "templates/index.html.j2"
         dest: "/var/www/html/index.html"
         mode: 0644
 
     - name: restart nginx
-      service:
+      ansible.builtin.service:
         name: nginx
         state: restarted

@@ -1,0 +1,20 @@
+---
+- name: Fiesta one ad-hoc commands
+  hosts: all
+  become: true
+  remote_user: pulsys
+  tasks:
+    - name: pong message
+      ansible.builtin.ping:
+
+    - name: uptime record
+      ansible.builtin.command: uptime
+
+    - name: tail syslog
+      ansible.builtin.command: tail /var/log/syslog
+    
+    - name: install htop
+      ansible.builtin.apt:
+        name: htop
+        state: present
+        update_cache: true
