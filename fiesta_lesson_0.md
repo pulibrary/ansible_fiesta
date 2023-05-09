@@ -16,7 +16,7 @@ participant has the following installed on their networked computer.
 * A Package manager
 * A Text Editor
 * Ansible
-* asdf
+* asdf or rtx
 * Docker
 * Git
 * Molecule
