@@ -16,7 +16,7 @@ participant has the following installed on their networked computer.
 * A Package manager
 * A Text Editor
 * Ansible
-* asdf or rtx
+* [asdf](https://asdf-vm.com/) or [mise](https://mise.jdx.dev/)
 * Docker
 * Git
 * Molecule
@@ -78,14 +78,6 @@ sudo apt -y install git
 ```
 
 
-* Install Docker
-```bash
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-sudo apt update
-sudo apt install docker-ce
-```
 
 ### Test your installation on both macOS and Ubuntu with:
 
@@ -95,8 +87,6 @@ You will need to run the following steps inside your cloned repository.
 * Install Ansible and Molecule with:
 ```zsh
 pipenv sync
-pipenv install
-pipenv shell
 ansible localhost -m ping
 ```
 
