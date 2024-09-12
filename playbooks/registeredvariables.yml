@@ -6,7 +6,7 @@
     - name: Install wget package
       ansible.builtin.apt:
         name: wget
-        state: installed
+        state: present
       register: install_result
  
     - name: debug results
