@@ -1,0 +1,19 @@
+---
+- name: Search_app | download nodejs version
+  ansible.builtin.unarchive:
+    src: "{{ nodejs_release_url }}/{{ desired_nodejs_version }}/node-{{ desired_nodejs_version }}-linux-x64.tar.gz"
+    dest: /usr/local
+    creates: /usr/local/node-{{ desired_nodejs_version }}-linux-x64
+    remote_src: true
+
+- name: Search_app | create symbolic links for node and npm
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    state: link
+  loop:
+    - {src: "/usr/local/node-{{ desired_nodejs_version }}-linux-x64/bin/node", dest: "/usr/local/bin/node"}
+    - {src: "/usr/local/node-{{ desired_nodejs_version }}-linux-x64/lib/node_modules/npm/bin/npm-cli.js", dest: "/usr/local/bin/npm"}
+  changed_when: false
