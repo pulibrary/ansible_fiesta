@@ -1,13 +1,23 @@
 ---
 # defaults file for roles/search_app
 solr_version: 8.11.3
-passenger_s_nginx_version: "1.25.2"
+passenger_server_name: www.example.com
+passenger_app_root: /opt/rails_app/current/public
+passenger_app_env: production
+passenger_listen_port: '80'
+
+passenger_root: /usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini
+passenger_ruby: /usr/bin/ruby
+
+nginx_worker_processes: "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
+nginx_worker_connections: "768"
+nginx_keepalive_timeout: "65"
+nginx_remove_default_vhost: true
+passenger_extra_config: ''
+passenger_enabled: 'on'
+passenger_extra_http_config: []
 passenger_s_nginx_user: nginx
-passenger_s_version: "6"
-passenger_s_release: "0.23"
 passenger_s_install_path: /opt/install
-passenger_s_app_root: /opt/rails_app/current/public
-passenger_s_app_env: production
 passenger_s_real_ip_from:
   - 128.112.203.144
   - 128.112.203.145
@@ -18,13 +28,8 @@ passenger_s_real_ip_from_staging:
   - 172.20.80.14
   - 172.20.80.19
 
-passenger_s_listen_port: '80'
-passenger_s_nginx_worker_processes: "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
-passenger_s_nginx_worker_connections: "768"
-passenger_s_nginx_keepalive_timeout: "65"
-passenger_s_nginx_remove_default_vhost: true
-passenger_s_enabled: 'on'
-passenger_s_extra_config: ''
-passenger_s_extra_http_config: []
 ruby_version: "3.2.0"
 install_path: "/opt/install"
+nodejs_release_url: "https://pulmirror.princeton.edu/mirror/node/dist/"
+desired_nodejs_version: v18.17.0
+running_on_server: true

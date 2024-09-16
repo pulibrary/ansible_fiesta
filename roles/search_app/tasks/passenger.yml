@@ -1,0 +1,67 @@
+# Variable setup.
+- name: Search_app | Include OS-specific variables.
+  ansible.builtin.include_vars: "main.yml"
+
+- name: Phusion | Define nginx_user.
+  ansible.builtin.set_fact:
+    nginx_user: "{{ __nginx_user }}"
+  when: nginx_user is not defined
+
+# Passenger repository setup.
+- name: Phusion | Add Passenger apt key.
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 561F9B9CAC40B2F7
+    state: present
+
+- name: Phusion | Add Phusion apt repo.
+  ansible.builtin.apt_repository:
+    repo: 'deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ ansible_distribution_release }} main'
+    state: present
+    filename: passenger
+  changed_when: false
+
+- name: Phusion | Install Nginx and Passenger.
+  ansible.builtin.apt:
+    name: "{{ nginx_passenger_packages }}"
+    state: present
+
+# Nginx and passenger configuration.
+- name: Phusion | Copy Nginx configuration into place.
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: "0644"
+  tags: passenger_config
+  notify: 'passenger : restart nginx'
+
+- name: Phusion | Insert/Update passenger-config reopen nginx rotate line
+  ansible.builtin.blockinfile:
+    path: "/etc/logrotate.d/nginx"
+    marker: "## ANSIBLE MANAGED BLOCK ###"
+    insertafter: "invoke-rc.d nginx rotate >/dev/null 2>&1"
+    block: |
+      passenger-config reopen-logs >/dev/null 2>&1 || true
+  changed_when: false
+
+- name: Phusion | Configure passenger virtual host.
+  ansible.builtin.template:
+    src: passenger.j2
+    dest: /etc/nginx/sites-available/passenger
+    mode: "0644"
+  notify: restart nginx
+
+- name: Phusion | Ensure passenger virtual host is enabled.
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/passenger
+    dest: /etc/nginx/sites-enabled/passenger
+    state: link
+
+- name: Phusion | Ensure default virtual host is removed.
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+    mode: "0644"
+  when: nginx_remove_default_vhost
+  notify:
+    - restart nginx

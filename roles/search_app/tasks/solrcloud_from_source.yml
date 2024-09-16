@@ -8,16 +8,5 @@
 - name: Search_app | Unarchive Solr
   ansible.builtin.unarchive:
     src: /tmp/solr-{{ solr_version }}.tgz
-    dest: /tmp
+    dest: /opt
     remote_src: true
-
-- name: Search_app | extract installer file
-  ansible.builtin.shell: |
-    tar xzf solr-{{ solr_version }}.tgz solr-{{ solr_version }}/bin/install_solr_service.sh --strip-components=2
-    chdir: /tmp/solr-{{ solr_version }}
-  changed_when: false
-
-- name: Search_app | automagically install solr
-  ansible.builtin.shell: |
-    sudo bash ./install_solr_service.sh solr-{{ solr_version }}.tgz
-  changed_when: false

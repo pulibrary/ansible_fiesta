@@ -39,9 +39,11 @@
     update_cache: true
 
 - name: Search_app | install postgresql repositories
-  ansible.builtin.command: /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+  ansible.builtin.command: echo | /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+  register: script_output
   changed_when: false
+  failed_when: script_output.rc != 0
 
-- name: Search_app | install passenger from source
+- name: Search_app | install passenger
   ansible.builtin.include_tasks:
-    file: passenger_from_source.yml
+    file: passenger.yml
