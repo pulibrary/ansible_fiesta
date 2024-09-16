@@ -1,18 +1,36 @@
 ---
 # tasks file for roles/search_app
+- name: Search_app | ensure required packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - curl
+    - build-essential
+    - zlib1g-dev
+    - libpcre3-dev
+    - libssl-dev
+    - libyaml-dev
+    - libcurl4-openssl-dev
+
 - name: Search_app | build ruby
   ansible.builtin.include_tasks:
-    - file: ruby_from_source.yml
+    file: ruby_from_source.yml
 
 - name: Search_app | build node
   ansible.builtin.include_tasks:
-    - file: node_from_source.yml
+    file: node_from_source.yml
 
 - name: Search_app | install openjdk headless
   ansible.builtin.apt:
     name: openjdk-18-jre-headless
     state: present
     update_cache: true
+
+- name: Search_app | install solr cloud from source
+  ansible.builtin.include_tasks:
+    file: solrcloud_from_source.yml
 
 - name: Search_app | install postgresql-common
   ansible.builtin.apt:
@@ -23,3 +41,7 @@
 - name: Search_app | install postgresql repositories
   ansible.builtin.command: /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
   changed_when: false
+
+- name: Search_app | install passenger from source
+  ansible.builtin.include_tasks:
+    file: passenger_from_source.yml

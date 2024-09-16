@@ -1,4 +1,10 @@
 ---
+- name: Search_app | create install path
+  ansible.builtin.file:
+    path: "{{ install_path }}"
+    state: directory
+    mode: "0755"
+
 - name: Search_app | check existing ruby version
   ansible.builtin.shell: ruby -v | awk "{print $2}"
   register: installed_ruby
@@ -45,6 +51,7 @@
   ansible.builtin.shell: cd {{ item.path }} && make uninstall
   loop: "{{ source_rubies.files }}"
   when: source_rubies.matched > 0
+  ignore_errors: true
 
 - name: Search_app | download ruby
   ansible.builtin.get_url:
@@ -61,11 +68,13 @@
     copy: false
 
 - name: Search_app | configure ruby
-  ansible.builtin.shell: cd {{ install_path }}/{{ ruby_version }} && ./configure --enable-shared
+  ansible.builtin.shell: cd {{ install_path }}/ruby-{{ ruby_version }} && ./configure --enable-shared
+  become: true
 
 - name: Search_app | make ruby
-  ansible.builtin.shell: cd {{ install_path }}/{{ ruby_version }} && make
+  ansible.builtin.shell: cd {{ install_path }}/ruby-{{ ruby_version }} && make
+  become: true
 
 - name: Search_app | install ruby
-  ansible.builtin.shell: cd {{ install_path }}/{{ ruby_version }} && make install
+  ansible.builtin.shell: cd {{ install_path }}/ruby-{{ ruby_version }} && make install
   become: true

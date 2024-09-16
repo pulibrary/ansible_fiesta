@@ -1,0 +1,72 @@
+ "$http_referer" '
+                    '"$http_user_agent" "$http_x_forwarded_for"';
+    access_log /opt/nginx/logs/access.log;
+    error_log /opt/nginx/logs/error.log notice;
+
+  ##
+  # Gzip Settings
+  ##
+
+  gzip on;
+  gzip_disable "msie6";
+
+  # gzip_vary on;
+  gzip_proxied any;
+  # gzip_comp_level 6;
+  # gzip_buffers 16 8k;
+  # gzip_http_version 1.1;
+  gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/javascript;
+
+
+  {% for opt in passenger_s_extra_http_config %}
+    {{ opt }}
+  {% endfor %}
+
+  ##
+  # Virtual Host Configs
+  ##
+
+  include /opt/nginx/conf/conf.d/*.conf;
+}
+# {{ ansible_managed | comment }}
+user {{ passenger_s_nginx_user }};
+worker_processes {{ passenger_s_nginx_worker_processes }};
+pid /opt/nginx/logs/nginx.pid;
+
+events {
+  worker_connections {{ passenger_s_nginx_worker_connections }};
+  # multi_accept on;
+}
+
+http {
+
+  {% if passenger_max_pool_size is defined %}
+  passenger_max_pool_size {{ passenger_max_pool_size }};
+  passenger_min_instances {{ passenger_max_pool_size }};
+  passenger_pre_start {{ passenger_server_name }};
+  {% endif %}
+
+  ##
+  # Basic Settings
+  ##
+
+  sendfile on;
+  tcp_nopush on;
+  tcp_nodelay on;
+  keepalive_timeout {{ passenger_s_nginx_keepalive_timeout }};
+  types_hash_max_size 2048;
+  # server_tokens off;
+
+  # server_names_hash_bucket_size 64;
+  # server_name_in_redirect off;
+
+  include /opt/nginx/conf/mime.types;
+  default_type application/octet-stream;
+
+  ##
+  # Logging Settings
+  ##
+
+  # Define log format
+    log_format custom '$remote_addr - $remote_user [$time_local] "$request" '
+                    '$status $body_bytes_sent

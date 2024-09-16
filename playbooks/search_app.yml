@@ -1,0 +1,12 @@
+---
+- name: deploy search_app
+  remote_user: pulsys
+  become: true
+  hosts: all
+  pre_tasks:
+    - name: update the apt cache
+      ansible.builtin.apt:
+        update_cache: true
+
+  roles:
+    - role: search_app

@@ -1,2 +1,30 @@
 ---
 # defaults file for roles/search_app
+solr_version: 8.11.3
+passenger_s_nginx_version: "1.25.2"
+passenger_s_nginx_user: nginx
+passenger_s_version: "6"
+passenger_s_release: "0.23"
+passenger_s_install_path: /opt/install
+passenger_s_app_root: /opt/rails_app/current/public
+passenger_s_app_env: production
+passenger_s_real_ip_from:
+  - 128.112.203.144
+  - 128.112.203.145
+  - 128.112.203.146
+# dev loadbalancer
+passenger_s_real_ip_from_staging:
+  - 172.20.80.13
+  - 172.20.80.14
+  - 172.20.80.19
+
+passenger_s_listen_port: '80'
+passenger_s_nginx_worker_processes: "{{ ansible_processor_vcpus | default(ansible_processor_count) }}"
+passenger_s_nginx_worker_connections: "768"
+passenger_s_nginx_keepalive_timeout: "65"
+passenger_s_nginx_remove_default_vhost: true
+passenger_s_enabled: 'on'
+passenger_s_extra_config: ''
+passenger_s_extra_http_config: []
+ruby_version: "3.2.0"
+install_path: "/opt/install"
