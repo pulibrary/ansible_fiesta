@@ -14,6 +14,10 @@
     - libyaml-dev
     - libcurl4-openssl-dev
 
+- name: Search_app | add deploy user
+  ansible.builtin.include_tasks:
+    file: conan.yml
+
 - name: Search_app | build ruby
   ansible.builtin.include_tasks:
     file: ruby_from_source.yml
@@ -32,17 +36,9 @@
   ansible.builtin.include_tasks:
     file: solrcloud_from_source.yml
 
-- name: Search_app | install postgresql-common
-  ansible.builtin.apt:
-    name: postgresql-common
-    state: present
-    update_cache: true
-
-- name: Search_app | install postgresql repositories
-  ansible.builtin.command: echo | /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
-  register: script_output
-  changed_when: false
-  failed_when: script_output.rc != 0
+- name: Search_app | install passenger
+  ansible.builtin.include_tasks:
+    file: postgresql.yml
 
 - name: Search_app | install passenger
   ansible.builtin.include_tasks:

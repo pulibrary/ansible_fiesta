@@ -1,13 +1,13 @@
 # {{ ansible_managed | comment }}
 server {
-  listen {{ passenger_s_listen_port }} default_server;
+  listen {{ passenger_listen_port }} default_server;
   server_name {{ passenger_server_name }};
   passenger_enabled {{ passenger_enabled }};
   passenger_app_env {{ passenger_app_env }};
   passenger_set_header X-Forwarded-Proto https;
   passenger_set_header X-Forwarded-For $remote_addr;
-  root {{ passenger_s_app_root }};
-  {% for ip in passenger_s_real_ip_from %}
+  root {{ passenger_app_root }};
+  {% for ip in passenger_real_ip_from %}
     set_real_ip_from {{ ip }};
     {% endfor %}
   real_ip_header X-Real-IP;
@@ -15,7 +15,7 @@ server {
 
   access_log /var/log/nginx/access.log custom if=$logging_enabled;
 
-  {{ passenger_s_extra_config }}
+  {{ passenger_extra_config }}
 
   location /nginx_status {
     stub_status;
@@ -26,7 +26,7 @@ server {
 
 # this filters out the load-balancer IPs, so we don't log health checks from them
 map $remote_addr $logging_enabled {
-  {% for ip in passenger_s_real_ip_from %}
+  {% for ip in passenger_real_ip_from %}
     "{{ ip }}" 0;
     {% endfor %}
      default 1;

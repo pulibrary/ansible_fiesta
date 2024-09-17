@@ -1,2 +1,16 @@
 ---
 # handlers file for roles/search_app
+- name: restart nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+
+- name: restart sshd
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+
+- name: restart postgresql
+  ansible.builtin.service:
+    name: postgresql
+    state: restarted

@@ -1,0 +1,30 @@
+---
+- name: Search_app | install postgresql-common
+  ansible.builtin.apt:
+    name: postgresql-common
+    state: present
+    update_cache: true
+
+- name: Search_app | Import PostgreSQL GPG key
+  ansible.builtin.apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+    state: present
+
+- name: Search_app | Add PostgreSQL repository
+  ansible.builtin.apt_repository:
+    repo: 'deb http://apt.postgresql.org/pub/repos/apt/ jammy-pgdg main'
+    state: present
+    filename: pgdg
+    update_cache: true
+
+- name: Search_app | install postgresql
+  ansible.builtin.apt:
+    name: postgresql
+    state: present
+
+- name: Search_app | PostgreSQL to allow trust from all local connections
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
+    dest: /etc/postgresql/16/main/pg_hba.conf
+    mode: "0644"
+  notify: restart postgresql

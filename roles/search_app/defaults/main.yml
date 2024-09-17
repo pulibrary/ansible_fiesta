@@ -16,14 +16,13 @@ nginx_remove_default_vhost: true
 passenger_extra_config: ''
 passenger_enabled: 'on'
 passenger_extra_http_config: []
-passenger_s_nginx_user: nginx
 passenger_s_install_path: /opt/install
-passenger_s_real_ip_from:
+passenger_real_ip_from:
   - 128.112.203.144
   - 128.112.203.145
   - 128.112.203.146
 # dev loadbalancer
-passenger_s_real_ip_from_staging:
+passenger_real_ip_from_staging:
   - 172.20.80.13
   - 172.20.80.14
   - 172.20.80.19
@@ -33,3 +32,8 @@ install_path: "/opt/install"
 nodejs_release_url: "https://pulmirror.princeton.edu/mirror/node/dist/"
 desired_nodejs_version: v18.17.0
 running_on_server: true
+deploy_user_shell: /usr/bin/bash
+deploy_user: "conan"
+deploy_user_github_keys:
+  - https://github.com/acozine.keys
+  - https://github.com/kayiwa.keys
