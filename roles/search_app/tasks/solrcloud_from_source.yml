@@ -5,25 +5,14 @@
     dest: /tmp
     mode: "0755"
 
-- name: Search_app | Unarchive Solr
-  ansible.builtin.unarchive:
-    src: /tmp/solr-{{ solr_version }}.tgz
-    dest: /opt
-    remote_src: true
-
-- name: Search_app | create Solr installation directory
-  ansible.builtin.file:
-    path: /opt/solr
-    state: directory
-    mode: "0755"
-
-- name: Search_app | copy Solr files to installation directory
+- name: Search_app | copy solr_install script
   ansible.builtin.copy:
-    src: /opt/solr-{{ solr_version }}/*
-    dest: /opt/solr/
+    src: install_solr_service.sh
+    dest: /tmp/install_solr_service.sh
     mode: "0755"
-    remote_src: true
 
 - name: Search_app | install Solr as a service (using the provided script)
   ansible.builtin.shell:
-    cmd: /opt/solr/bin/install_solr_service.sh -u solr -s /opt/solr -p 8983
+    cmd: /tmp/install_solr_service.sh /tmp/solr-8.11.3.tgz
+  become: true
+  become_user: root
